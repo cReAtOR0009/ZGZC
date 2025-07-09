@@ -1,50 +1,141 @@
-# Welcome to your Expo app 👋
+# 📱 Church Convention Accreditation App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A robust mobile application built with **React Native (Expo)** and powered by **Appwrite**, designed to simplify and streamline the accreditation and attendance process during large church conventions or events.
 
-## Get started
+## ✨ Features
 
-1. Install dependencies
+- **QR Code Scanning for Accreditation**
+  - Fast and reliable attendee check-in using QR codes.
+  - Offline mode with queued sync when internet is unavailable.
+  
+- **Session Management**
+  - Auto-select or manually assign current session.
+  - Add attendees to sessions in real-time.
+  
+- **Real-Time Attendance**
+  - Live sync of attendees per session.
+  - Dynamic search and filtering by name, email, company, etc.
 
-   ```bash
-   npm install
-   ```
+- **Attendee Profiles**
+  - View full attendee details, photo, contact, and session attendance history.
+  - Searchable, sortable list with pull-to-refresh.
+  
+- **Offline Support**
+  - Queue scans when offline and sync once online.
+  - Persistent offline storage using SecureStore and Zustand.
 
-2. Start the app
+- **Role-Based Access (Planned)**
+  - Admin/staff login system.
+  - Secure access control.
 
-   ```bash
-   npx expo start
-   ```
+- **Export Options (Planned)**
+  - Export attendees or session participants as CSV or PDF.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🧠 Tech Stack
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+| Layer              | Tech                                         |
+|-------------------|----------------------------------------------|
+| Frontend UI       | React Native (Expo), TypeScript              |
+| State Management  | Zustand with SecureStore + AsyncStorage      |
+| Backend as a Service | Appwrite (Databases, Auth, Storage, Realtime) |
+| QR Scanning       | Expo Camera                                  |
+| Network Awareness | `@react-native-community/netinfo`            |
+| Navigation        | Expo Router (React Navigation under the hood) |
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🏗️ Project Structure
+
+
+
+
+---
+
+## 🧪 Setup & Development
+
+### 🚀 Prerequisites
+
+- Node.js & npm
+- Expo CLI
+- Appwrite instance (or use Appwrite Cloud)
+- Android/iOS emulator or physical device
+
+### ⚙️ Installation
 
 ```bash
-npm run reset-project
+git clone https://github.com/[yourusername]/church-accreditation-app.git
+cd church-accreditation-app
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### ⚙️ Starting app
 
-## Learn more
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+###  Make sure to configure your .env or appwriteConfig.ts file with valid Appwrite credentials:
 
-## Join the community
+.setEndpoint('https://cloud.appwrite.io/v1')
+.setProject('<YOUR_PROJECT_ID>')
+.setDevKey('<YOUR_API_KEY>')
 
-Join our community of developers creating universal apps.
+export const APPWRITE_DB_ID = '<YOUR_DB_ID>';
+export const ATTENDEE_COLLECTION_ID = '<COLLECTION_ID>';
+export const SESSION_COLLECTION_ID = '<COLLECTION_ID>';
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 🔐 Authentication
+
+-Zustand + Appwrite Auth is used for login/logout:
+-Email/password-based login
+-Session persistence via SecureStore
+-Sessions are restored using account.get() on app load.
+
+
+#### QR Scanning Flow
+-Scan attendee's QR (matches against qrId).
+-If offline, store to queue using Zustand.
+-If online:
+-Mark attendee as accredited.
+-Add to current session’s attendeeIds.
+
+#### Offline Sync Queue
+-Scanned while offline? Stored in local queue (scanQueue).
+-Automatically synced when online.
+-Manual retry button (planned).
+
+#### Upcoming Features
+-Admin dashboard and role-based permissions
+-Badge printing and certificate export
+-Attendance heatmaps per session
+-Push notifications for session updates
+-Email/SMS confirmation to attendees
+
+#### Security Notes
+-Sensitive data is stored securely using expo-secure-store.
+-Appwrite API key is scoped appropriately.
+-Authentication is enforced via session token.
+
+
+#### Contributing
+We welcome pull requests and contributions!
+
+```bash
+   git checkout -b feature/your-feature-name
+   npm run lint
+   npm run test
+```
+
+Open a PR against main
+
+License
+MIT License ©Creator
+
+#### Contact
+For questions, support, or feature requests:
+
+📧 Email: epidnugoairdrop@gmail.com
+
